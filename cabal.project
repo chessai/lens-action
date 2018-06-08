@@ -1,1 +1,1 @@
-packages: .
+packages: . ../semigroupoids ../lens ../kan-extensions ../free ../adjunctions 

@@ -163,7 +163,7 @@ acts :: IndexPreservingAction m (m a) a
 acts = act id
 {-# INLINE acts #-}
 
--- | Apply a 'Monad' transformer to an 'Action'.
+-- | Semiapplicative a 'Monad' transformer to an 'Action'.
 liftAct :: (MonadTrans trans, Monad m) => Acting m a s a -> IndexPreservingAction (trans m) s a
 liftAct l = act (lift . perform l)
 {-# INLINE liftAct #-}

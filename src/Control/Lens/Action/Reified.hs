@@ -24,7 +24,7 @@ import Control.Lens hiding ((<.>))
 import Control.Monad
 import Control.Monad.Reader.Class
 import Data.Functor.Contravariant
-import Data.Functor.Bind
+import Data.Functor.Semimonad
 import Data.Functor.Plus
 import Data.Profunctor
 #if !(MIN_VERSION_base(4,11,0))
@@ -93,7 +93,7 @@ instance Functor (ReifiedMonadicFold m s) where
   fmap f l = MonadicFold (runMonadicFold l.to f)
   {-# INLINE fmap #-}
 
-instance Apply (ReifiedMonadicFold m s) where
+instance Semiapplicative (ReifiedMonadicFold m s) where
   mf <.> ma = mf &&& ma >>> (MonadicFold $ to (uncurry ($)))
   {-# INLINE (<.>) #-}
 
@@ -109,7 +109,7 @@ instance Alternative (ReifiedMonadicFold m s) where
   MonadicFold ma <|> MonadicFold mb = MonadicFold $ to (\x->(x,x)).beside ma mb
   {-# INLINE (<|>) #-}
 
-instance Bind (ReifiedMonadicFold m s) where
+instance Semimonad (ReifiedMonadicFold m s) where
   ma >>- f = ((ma >>^ f) &&& returnA) >>> app
   {-# INLINE (>>-) #-}
 

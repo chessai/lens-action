@@ -32,7 +32,7 @@ module Control.Lens.Action.Type
 
 import Control.Applicative (Applicative)
 import Control.Lens (Conjoined, Indexable)
-import Data.Functor.Apply (Apply)
+import Data.Functor.Semiapplicative (Semiapplicative)
 import Prelude ()
 
 import Control.Lens.Action.Internal (Effective)
@@ -71,7 +71,7 @@ type IndexPreservingAction m s a = forall p f r. (Conjoined p, Effective m r f) 
 --
 -- You can compose a 'MonadicFold' with another 'MonadicFold' using ('Prelude..') from the @Prelude@.
 type MonadicFold m s a = forall f r. (Effective m r f, Applicative f) => (a -> f a) -> s -> f s
-type RelevantMonadicFold m s a = forall f r. (Effective m r f, Apply f) => (a -> f a) -> s -> f s
+type RelevantMonadicFold m s a = forall f r. (Effective m r f, Semiapplicative f) => (a -> f a) -> s -> f s
 
 -- | An 'IndexedMonadicFold' is an 'IndexedFold' enriched with access to a 'Monad' for side-effects.
 --
@@ -79,9 +79,9 @@ type RelevantMonadicFold m s a = forall f r. (Effective m r f, Apply f) => (a ->
 --
 -- You can compose an 'IndexedMonadicFold' with another 'IndexedMonadicFold' using ('Prelude..') from the @Prelude@.
 type IndexedMonadicFold i m s a = forall p f r. (Indexable i p, Effective m r f, Applicative f) => p a (f a) -> s -> f s
-type IndexedRelevantMonadicFold i m s a = forall p f r. (Indexable i p, Effective m r f, Apply f) => p a (f a) -> s -> f s
+type IndexedRelevantMonadicFold i m s a = forall p f r. (Indexable i p, Effective m r f, Semiapplicative f) => p a (f a) -> s -> f s
 
 -- | An 'IndexPreservingFold' can be used as a 'Fold', but when composed with an 'IndexedTraversal',
 -- 'IndexedFold', or 'IndexedLens' yields an 'IndexedFold' respectively.
 type IndexPreservingMonadicFold m s a = forall p f r. (Conjoined p, Effective m r f, Applicative f) => p a (f a) -> p s (f s)
-type IndexPreservingRelevantMonadicFold m s a = forall p f r. (Conjoined p, Effective m r f, Apply f) => p a (f a) -> p s (f s)
+type IndexPreservingRelevantMonadicFold m s a = forall p f r. (Conjoined p, Effective m r f, Semiapplicative f) => p a (f a) -> p s (f s)

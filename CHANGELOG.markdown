@@ -1,6 +1,6 @@
 0.2.3 [2018.01.18]
 ------------------
-* Add an `Apply` context to the `Monoid` instance for `Effect`, allowing
+* Add an `Semiapplicative` context to the `Monoid` instance for `Effect`, allowing
   `lens-action` to build against `lens-4.16`.
 
 0.2.2
